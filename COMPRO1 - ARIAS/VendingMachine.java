@@ -4,7 +4,7 @@ public class VendingMachine {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
-        float coffee, tea, water;
+        final float coffee, tea, water;
         coffee = 100.00f;
         tea = 90.00f;
         water = 20.00f;
@@ -15,20 +15,26 @@ public class VendingMachine {
         System.out.print("Enter quantity: ");
         int quantity = input.nextInt();
 
-        float total;
+        String item;
+        float itemPrice;
 
         if (choice == 1) {
-            total = coffee * quantity;
-            System.out.printf("\n\nOrder Summary\n*****************************\n%d x Coffee @ %.2f\nTotal: %.2f\n\nGoodbye!", quantity, coffee, total);
+            item = "Coffee";
+            itemPrice = coffee;
         } else if (choice == 2) {
-            total = tea * quantity;
-            System.out.printf("\n\nOrder Summary\n*****************************\n%d x Tea @ %.2f\nTotal: %.2f\n\nGoodbye!", quantity, tea, total);
+            item = "Tea";
+            itemPrice = tea;
         } else if (choice == 3) {
-            total = water * quantity;
-            System.out.printf("\n\nOrder Summary\n*****************************\n%d x Water @ %.2f\nTotal: %.2f\n\nGoodbye!", quantity, water, total);
-        } else if (!(choice < 0) && !(choice < 4)) {
-            System.out.print("\n\nInvalid choice");
+            item = "Coffee";
+            itemPrice = water;
+        } else {
+            System.out.print("\nInvalid choice");
+            return;
         }
+
+        float total = itemPrice * quantity;
+
+        System.out.printf("\n\nOrder Summary\n*****************************\n%d x %s @ %.2f\nTotal: %.2f\n\nGoodbye!",quantity, item, itemPrice, total);
 
         input.close();
     }
