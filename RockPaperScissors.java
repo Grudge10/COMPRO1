@@ -61,7 +61,8 @@ public class RockPaperScissors {
 
                 %s
 
-                GG""", userChoice, botChoice, decide);
+                GG""",
+                userChoice, botChoice, decide);
 
         input.close();
     }
