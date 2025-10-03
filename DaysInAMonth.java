@@ -10,6 +10,7 @@ public class DaysInAMonth {
 
         if (month < 1 || month > 12) {
             System.out.println("Invalid Choice"); // Check for invalid choice
+            System.exit(0);
         }
 
         System.out.print("Input Year: ");
