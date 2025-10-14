@@ -5,7 +5,15 @@ public class EvenNumber {
         Scanner input = new Scanner(System.in);
 
         System.out.print("Enter a number: ");
+
+        if (!input.hasNextInt()) {
+            System.out.println("Invalid Choice!");
+            System.exit(0);
+        }
+
         int n = input.nextInt();
+
+        System.out.printf("The even numbers from 0 to %d", n);
 
         int x = 0;
         while (x <= n) {
@@ -14,5 +22,7 @@ public class EvenNumber {
             }
             x++;
         }
+
+        input.close();
     }
 }
