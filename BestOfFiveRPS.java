@@ -4,11 +4,10 @@ public class BestOfFiveRPS {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
-        int i = 0;
         int userWins = 0;
         int botWins = 0;
         int round = 1;
-        while (i < 5) {
+        while (userWins < 5 && botWins < 5) {
             System.out.print("""
 
 
@@ -18,19 +17,22 @@ public class BestOfFiveRPS {
                     [ 1 ] Rock
                     [ 2 ] Paper
                     [ 3 ] Scissors""");
-            System.out.print("\nChoose: ");
 
-            if (!input.hasNextInt()) {
-                System.out.print("Invalid Choice!");
-                System.exit(0);
-            }
-
-            byte userInput = input.nextByte();
-
-            // return if invalid choice
-            if (userInput < 1 || userInput > 3) {
-                System.out.print("Invalid Choice!");
-                System.exit(0);
+            byte userInput = 0;
+            boolean InvalidChoice = true;
+            while (InvalidChoice) {
+                System.out.print("\nChoose: ");
+                if (input.hasNextByte()) {
+                    userInput = input.nextByte();
+                    if (userInput >= 1 && userInput <= 3) {
+                        InvalidChoice = false;
+                    } else {
+                        System.out.print("Invalid Choice! Retry again.");
+                    }
+                } else {
+                    System.out.print("Invalid Choice! Retry again.");
+                    input.next();
+                }
             }
 
             byte botInput = (byte) (Math.floor(Math.random() * 3) + 1);
@@ -62,11 +64,11 @@ public class BestOfFiveRPS {
                     || (userInput == 3 && botInput == 2)) {
                 decide = "win!!!";
                 userWins++;
-                i++;
+
             } else {
                 decide = "lose!!!";
                 botWins++;
-                i++;
+
             }
 
             System.out.printf("""
@@ -84,9 +86,7 @@ public class BestOfFiveRPS {
             round++;
         }
 
-        if (userWins == botWins) {
-            System.out.printf("Its a tie!!! Your score is %d while the bot's score is %s", userWins, botWins);
-        } else if (userWins > botWins) {
+        if (userWins > botWins) {
             System.out.printf("You win!!! Your score is %d while the bot's score is %s", userWins, botWins);
         } else {
             System.out.printf("You lose!!! Your score is %d while the bot's score is %s", userWins, botWins);
