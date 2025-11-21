@@ -5,9 +5,9 @@ public class VendingMachine {
         Scanner input = new Scanner(System.in);
 
         final float coffee, tea, water;
-        coffee = 100.00f;
-        tea = 90.00f;
-        water = 20.00f;
+        coffee = 100.00F;
+        tea = 90.00F;
+        water = 20.00F;
 
         System.out.print("*********************************\nWELCOME TO MY SHOP\n*********************************\nMenu:\n[ 1 ] Coffee @ 100.00\n[ 2 ] Tea @ 90.00\n[ 3 ] Water @ 20.00'");
         System.out.print("\n\nEnter your choice: ");
@@ -15,8 +15,8 @@ public class VendingMachine {
         System.out.print("Enter quantity: ");
         int quantity = input.nextInt();
 
-        String item;
-        float itemPrice;
+        String item = " ";
+        float itemPrice = 0;
 
         if (choice == 1) {
             item = "Coffee";
@@ -29,7 +29,7 @@ public class VendingMachine {
             itemPrice = water;
         } else {
             System.out.print("\nInvalid choice");
-            return;
+            System.exit(0);
         }
 
         float total = itemPrice * quantity;
