@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
 public class CalendarMethods {
-    /** Main method */
     public static void main(String[] args) {
         int month = monthInput(0); // get month
         int year = yearInput(0); // get year
