@@ -3,12 +3,8 @@ import java.util.Scanner;
 public class CalendarMethods {
     /** Main method */
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Enter full year (e.g., 2012): "); // Prompt the user to enter year
-        int year = input.nextInt();
-        System.out.print("Enter month as a number between 1 and 12: "); // Prompt the user to enter month
-        int month = input.nextInt();
-        input.close();
+        int month = monthInput(0); // get month
+        int year = yearInput(0); // get year
 
         // Print calendar for the month of the year
         printMonth(year, month);
@@ -16,17 +12,59 @@ public class CalendarMethods {
         printMonthBody(year, month);
     }
 
-    /** A stub for printMonth may look like this */
+    // get month
+    public static int monthInput(int month) {
+        Scanner input = new Scanner(System.in);
+        while (true) {
+            System.out.print("Enter month (ex. january = 1): ");
+            if (input.hasNextInt()) {
+                month = input.nextInt();
+                if (month < 1 || month > 12) {
+                    System.out.println("Invalid input please retry!");
+                    continue;
+                }
+                break;
+            } else {
+                System.out.println("Invalid input please retry!");
+                input.next();
+            }
+        }
+        input.close();
+        return month;
+    }
+
+    // get year
+    public static int yearInput(int year) {
+        Scanner input = new Scanner(System.in);
+        while (true) {
+            System.out.print("Enter year: ");
+            if (input.hasNextInt()) {
+                year = input.nextInt();
+                if (year < 1) {
+                    System.out.println("Invalid input please retry!");
+                    continue;
+                }
+                break;
+            } else {
+                System.out.println("Invalid input please retry!");
+                input.next();
+            }
+        }
+        input.close();
+        return year;
+    }
+
+    // print calendar header
     public static void printMonth(int year, int month) {
         System.out.printf("%9s%s %d%.9s\n", " ", getMonthName(month), year, " ");
     }
 
-    /** A stub for printMonthTitle may look like this */
+    // print days
     public static void printMonthTitle(int year, int month) {
         System.out.println(" Sun Mon Tue Wed Thu Fri Sat");
     }
 
-    /** A stub for printMonthBody may look like this */
+    // print calendar body
     public static void printMonthBody(int year, int month) {
         for (int q = 0; q < getStartDay(year, month); q++) {
             System.out.printf("%4s", " ");
@@ -40,9 +78,8 @@ public class CalendarMethods {
         System.out.println();
     }
 
-    /** A stub for getMonthName may look like this */
+    // convert month number to string
     public static String getMonthName(int month) {
-        // Change month number to string
         String monthString = " ";
         switch (month) {
             case 1: monthString = "January"; break;
@@ -61,7 +98,7 @@ public class CalendarMethods {
         return monthString;
     }
 
-    /** A stub for getStartDay may look like this */
+    // calculate where the first day of the month is using zeller's congruence
     public static int getStartDay(int year, int month) {
         // Set up january and february for zeller's congruence as well as the year
         int zellerYear = year;
@@ -69,15 +106,12 @@ public class CalendarMethods {
             month += 12;
             zellerYear--;
         }
-
-        // calculate where the first day of the month is using zeller's congruence
         int zellersCongruence = (int) (1 + (26 * (month + 1) / 10) + (zellerYear % 100) + ((zellerYear % 100) / 4) + ((zellerYear / 100) / 4) + (5 * (zellerYear / 100))) % 7;
         int startDay = (zellersCongruence + 6) % 7;
-
         return startDay;
     }
 
-    /** A stub for getNumberOfDaysInMonth may look like this */
+    // determine how many days there is in the month
     public static int getNumberOfDaysInMonth(int year, int month) {
         int days = 0;
         if (month == 2) {
@@ -90,7 +124,7 @@ public class CalendarMethods {
         return days;
     }
 
-    /** A stub for isLeapYear may look like this */
+    // check if leap year
     public static boolean isLeapYear(int year) {
         boolean leapYear = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
         return leapYear;
