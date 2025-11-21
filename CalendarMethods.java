@@ -1,50 +1,48 @@
 import java.util.Scanner;
 
 public class CalendarMethods {
+    /** Main method */
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in); // Scan user inputs
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter full year (e.g., 2012): "); // Prompt the user to enter year
+        int year = input.nextInt();
+        System.out.print("Enter month as a number between 1 and 12: "); // Prompt the user to enter month
+        int month = input.nextInt();
+        input.close();
 
-        // Get month with error checker
-        int month = 0;
-        while (true) {
-            System.out.print("Enter month (ex. january = 1): ");
-            if (input.hasNextInt()) {
-                month = input.nextInt();
-                if (month < 1 || month > 12) {
-                    System.out.println("Invalid input please retry!");
-                    continue;
-                }
-                break;
-            } else {
-                System.out.println("Invalid input please retry!");
-                input.next();
-            }
-        }
-
-        // Get year with error checker
-        int year = 0;
-        while (true) {
-            System.out.print("Enter year: ");
-            if (input.hasNextInt()) {
-                year = input.nextInt();
-                if (year < 1) {
-                    System.out.println("Invalid input please retry!");
-                    continue;
-                }
-                break;
-            } else {
-                System.out.println("Invalid input please retry!");
-                input.next();
-            }
-        }
-
-        input.close(); // Close scanner
-
-        calendar(month, year); // print calendar
+        // Print calendar for the month of the year
+        printMonth(year, month);
+        printMonthTitle(year, month);
+        printMonthBody(year, month);
     }
 
-    // Change month int to string
-    public static String monthIntToString(int month) {
+    /** A stub for printMonth may look like this */
+    public static void printMonth(int year, int month) {
+        System.out.printf("%15s (%d)\n", getMonthName(month), year);
+    }
+
+    /** A stub for printMonthTitle may look like this */
+    public static void printMonthTitle(int year, int month) {
+        System.out.println(" Sun Mon Tue Wed Thu Fri Sat");
+    }
+
+    /** A stub for printMonthBody may look like this */
+    public static void printMonthBody(int year, int month) {
+        for (int q = 0; q < getStartDay(year, month); q++) {
+            System.out.printf("%4s", " ");
+        }
+        for (int w = 1; w <= getNumberOfDaysInMonth(year, month); w++) {
+            System.out.printf("%4d", w);
+            if ((w + getStartDay(year, month)) % 7 == 0) {
+                System.out.println();
+            }
+        }
+        System.out.println();
+    }
+
+    /** A stub for getMonthName may look like this */
+    public static String getMonthName(int month) {
+        // Change month number to string
         String monthString = " ";
         switch (month) {
             case 1: monthString = "January"; break;
@@ -63,8 +61,24 @@ public class CalendarMethods {
         return monthString;
     }
 
-    // Check how many theres there is in the month
-    public static int daysOfTheMonth(int month, int year) {
+    /** A stub for getStartDay may look like this */
+    public static int getStartDay(int year, int month) {
+        // Set up january and february for zeller's congruence as well as the year
+        int zellerYear = year;
+        if (month == 1 || month == 2) {
+            month += 12;
+            zellerYear--;
+        }
+
+        // calculate where the first day of the month is using zeller's congruence
+        int zellersCongruence = (int) (1 + (26 * (month + 1) / 10) + (zellerYear % 100) + ((zellerYear % 100) / 4) + ((zellerYear / 100) / 4) + (5 * (zellerYear / 100))) % 7;
+        int startDay = (zellersCongruence + 6) % 7;
+
+        return startDay;
+    }
+
+    /** A stub for getNumberOfDaysInMonth may look like this */
+    public static int getNumberOfDaysInMonth(int year, int month) {
         int days = 0;
         if (month == 2) {
             days = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0) ? 29 : 28;
@@ -76,31 +90,9 @@ public class CalendarMethods {
         return days;
     }
 
-    // Calculate zeller's congruence and find out where the first day of the month is
-    public static int zellersCongruence(int month, int year) {
-        // Set up january and february for zeller's congruence as well as the year
-        int zellerYear = year;
-        if (month == 1 || month == 2) {
-            month += 12;
-            zellerYear--;
-        }
-        int h = (int) (1 + (26 * (month + 1) / 10) + (zellerYear % 100) + ((zellerYear % 100) / 4) + ((zellerYear / 100) / 4) + (5 * (zellerYear / 100))) % 7;
-        return h;
-    }
-
-    // Print calendar
-    public static void calendar(int month, int year){
-        System.out.printf("%15s (%s)\n", monthIntToString(month), year);
-        System.out.println(" Sun Mon Tue Wed Thu Fri Sat");
-        for (int q = 0; q < (zellersCongruence(month, year) + 6) % 7; q++) {
-            System.out.printf("%4s", " ");
-        }
-        for (int w = 1; w <= daysOfTheMonth(month, year); w++) {
-            System.out.printf("%4d", w);
-            if ((w + ((zellersCongruence(month, year) + 6) % 7)) % 7 == 0) {
-                System.out.println();
-            }
-        }
-        System.out.println();
+    /** A stub for isLeapYear may look like this */
+    public static boolean isLeapYear(int year) {
+        boolean leapYear = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+        return leapYear;
     }
 }
