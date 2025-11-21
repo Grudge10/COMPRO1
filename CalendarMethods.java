@@ -18,7 +18,7 @@ public class CalendarMethods {
 
     /** A stub for printMonth may look like this */
     public static void printMonth(int year, int month) {
-        System.out.printf("%15s (%d)\n", getMonthName(month), year);
+        System.out.printf("%9s%s %d%.9s\n", " ", getMonthName(month), year, " ");
     }
 
     /** A stub for printMonthTitle may look like this */
