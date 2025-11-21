@@ -28,7 +28,6 @@ public class CalendarMethods {
                 input.next();
             }
         }
-        input.close();
         return month;
     }
 
@@ -49,7 +48,6 @@ public class CalendarMethods {
                 input.next();
             }
         }
-        input.close();
         return year;
     }
 
