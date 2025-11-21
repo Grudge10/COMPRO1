@@ -1,0 +1,95 @@
+import java.util.Scanner;
+
+public class Calendar {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in); // Scan user inputs
+
+        // Get month with error checker
+        int month = 0;
+        while (true) {
+            System.out.print("Enter month (ex. january = 1): ");
+            if (input.hasNextInt()) {
+                month = input.nextInt();
+                if (month < 1 || month > 12) {
+                    System.out.println("Invalid input please retry!");
+                    continue;
+                }
+                break;
+            } else {
+                System.out.println("Invalid input please retry!");
+                input.next();
+            }
+        }
+
+        // Get year with error checker
+        int year = 0;
+        while (true) {
+            System.out.print("Enter year: ");
+            if (input.hasNextInt()) {
+                year = input.nextInt();
+                if (year < 1) {
+                    System.out.println("Invalid input please retry!");
+                    continue;
+                }
+                break;
+            } else {
+                System.out.println("Invalid input please retry!");
+                input.next();
+            }
+        }
+
+        input.close(); // close scanner
+
+        // Check what number of day
+        int days = 0;
+        if (month == 2) {
+            days = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0) ? 29 : 28;
+        } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+            days = 30;
+        } else {
+            days = 31;
+        }
+
+        // Set up january and february for zeller's congruence as well as the year
+        int zellerYear = year;
+        if (month == 1 || month == 2) {
+            month += 12;
+            zellerYear--;
+        }
+
+        // calculate where the first day of the month is using zeller's congruence
+        int zellersCongruence = (int) (1 + (26 * (month + 1) / 10) + (zellerYear % 100) + ((zellerYear % 100) / 4) + ((zellerYear / 100) / 4) + (5 * (zellerYear / 100))) % 7;
+        int startDay = (zellersCongruence + 6) % 7;
+
+        // Change month number to string
+        String monthString = " ";
+        switch (month) {
+            case 13: monthString = "January"; break;
+            case 14: monthString = "February"; break;
+            case 3: monthString = "March"; break;
+            case 4: monthString = "April"; break;
+            case 5: monthString = "May"; break;
+            case 6: monthString = "June"; break;
+            case 7: monthString = "July"; break;
+            case 8: monthString = "August"; break;
+            case 9: monthString = "September"; break;
+            case 10: monthString = "October"; break;
+            case 11: monthString = "November"; break;
+            case 12: monthString = "December"; break;
+        }
+
+        // Print calendar
+        System.out.printf("%15s (%s)\n", monthString, year);
+        System.out.println(" Sun Mon Tue Wed Thu Fri Sat");
+        for (int q = 0; q < startDay; q++) {
+            System.out.printf("%4s", " ");
+        }
+        for (int w = 1; w <= days; w++) {
+            System.out.printf("%4d", w);
+            if ((w + startDay) % 7 == 0) {
+                System.out.println();
+            }
+        }
+        System.out.println();
+    }
+}
