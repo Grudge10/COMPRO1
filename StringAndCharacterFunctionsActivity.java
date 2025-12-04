@@ -45,10 +45,13 @@ public class StringAndCharacterFunctionsActivity {
         if (SSN.length() != 11) // check if the length of the SSN is wrong. if yes, return invalid
             return "an invalid";
         for (int i = 0; i <= 10; i++) { // check if the numbers and dashes are in the wrong place. if yes, return invalid
-            if ((i == 3 || i == 6) && SSN.charAt(i) != '-')
-                return "an invalid";
-            else if (!Character.isDigit(SSN.charAt(i)))
-                return "an invalid";
+            if (i == 3 || i == 6) {
+                if (SSN.charAt(i) != '-')
+                    return "an invalid";
+            } else {
+                if (!Character.isDigit(SSN.charAt(i)))
+                    return "an invalid";
+            }
         }
         return "a valid"; // if the provided SSN has passed through all the checkings, return valid
     }
@@ -58,7 +61,7 @@ public class StringAndCharacterFunctionsActivity {
         for (int i = 1; i <= 3; i++) { // create a random number 3 times which will turn into a letter
             plateNumber += abc.charAt((int) (Math.random() * 26));
         }
-        plateNumber += Integer.toString(1000 + (int) (Math.random() * 9999)); // add in 4 random digits
+        plateNumber += Integer.toString(1000 + (int) (Math.random() * 9000)); // add in 4 random digits
         return plateNumber; // return the created plate number
     }
 }
