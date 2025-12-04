@@ -45,7 +45,7 @@ public class StringAndCharacterFunctionsActivity {
         if (SSN.length() != 11) // check if the length of the SSN is wrong. if yes, return invalid
             return "an invalid";
         for (int i = 0; i <= 10; i++) { // check if the numbers and dashes are in the wrong place. if yes, return invalid
-            if (i == 3 || i == 6 && SSN.charAt(i) != '-')
+            if ((i == 3 || i == 6) && SSN.charAt(i) != '-')
                 return "an invalid";
             else if (!Character.isDigit(SSN.charAt(i)))
                 return "an invalid";
