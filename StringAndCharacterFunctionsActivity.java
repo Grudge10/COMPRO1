@@ -12,13 +12,13 @@ public class StringAndCharacterFunctionsActivity {
         System.out.printf("%s is %s social security number\n", SSN, validateSSN(SSN));
         input.close();
 
-        generateVehiclePlateNumbers();
+        System.out.printf("Your plate number is %s\n", generateVehiclePlateNumbers());
     }
 
     public static String studentMajorAndStatus(String choice) {
-        String majorAndStatus = "";
-        if (choice.charAt(0) == 'M' || choice.charAt(0) == 'C' || choice.charAt(0) == 'I') {
-            switch (choice.charAt(0)) {
+        String majorAndStatus = "", choiceFixed = choice.toUpperCase();
+        if (choiceFixed.charAt(0) == 'M' || choiceFixed.charAt(0) == 'C' || choiceFixed.charAt(0) == 'I') {
+            switch (choiceFixed.charAt(0)) {
                 case 'M':
                     majorAndStatus += "Mathematics ";
                     break;
@@ -29,8 +29,8 @@ public class StringAndCharacterFunctionsActivity {
                     majorAndStatus += "Information Technology ";
                     break;
             }
-            if (choice.charAt(1) == '1' || choice.charAt(1) == '2' || choice.charAt(1) == '3' || choice.charAt(1) == '4') {
-                switch (choice.charAt(1)) {
+            if (choiceFixed.charAt(1) == '1' || choiceFixed.charAt(1) == '2' || choiceFixed.charAt(1) == '3' || choiceFixed.charAt(1) == '4') {
+                switch (choiceFixed.charAt(1)) {
                     case '1':
                         majorAndStatus += "Freshman";
                         break;
