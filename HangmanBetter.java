@@ -14,7 +14,7 @@ public class HangmanBetter {
                         "rib", "fit", "cry", "bar", "tip", "hut", "jet", "set", "mug", "dog", "fax", "pit" },
                 mediumWordBank = { "trial", "scene", "fairy", "shine", "image", "match", "beach", "ideal", "weigh",
                         "glare", "siege", "shock", "dairy", "grass", "bride", "torch", "climb", "crude", "scale",
-                        "ankle", "north", "rider", "speed", "house", "clean", "ghost", "admit", "Venus", "still",
+                        "ankle", "north", "rider", "speed", "house", "clean", "ghost", "admit", "venus", "still",
                         "issue", "greet", "ditch", "mayor", "aisle", "width", "drain", "rumor", "charm", "strap",
                         "rally", "punch", "salad", "sugar", "tight", "coach", "stage", "witch", "orbit", "drink",
                         "watch" },
@@ -29,7 +29,7 @@ public class HangmanBetter {
                         "definition", "connection" };
 
         // loop until theres above 50 players
-        while (playerCount <= 50) {
+        while (playerCount < 50) {
             while (true) { // get the player's name and not accept empty names
                 System.out.print("Player Name: ");
                 playerNames[playerCount] = input.nextLine().trim();
@@ -77,10 +77,10 @@ public class HangmanBetter {
             System.out.printf("Your final score, %s, is %d %s\n\n", playerNames[playerCount],
                     playerScores[playerCount], playerScores[playerCount] == 1 ? "point" : "points");
 
+            playerCount++; // +1 to playerCount
+
             // check if there will be another player
-            if (anotherPlayer())
-                playerCount++; // if yes, +1 playerCount
-            else
+            if (!anotherPlayer())
                 break; // if no, break the loop
         }
 
@@ -123,7 +123,7 @@ public class HangmanBetter {
             }
             System.out.println("invalid choice");
         }
-        return choice == 'y' ? true : false;
+        return choice == 'y';
     }
 
     // the whole game's logic
@@ -136,7 +136,7 @@ public class HangmanBetter {
         char[] guessedLetters = new char[100];
 
         // keep playing until max incorrect guesses reached or word fully guessed
-        while (currentIncorrectGuesses < maxIncorrect && !(currentHiddenWord.indexOf('*') < 0)) {
+        while (currentIncorrectGuesses < maxIncorrect && currentHiddenWord.indexOf('*') >= 0) {
             char guess = getLetterGuess(currentHiddenWord); // let the player guess a letter
 
             // check if the letter is already in the word. if yes, repeat loop
@@ -153,7 +153,7 @@ public class HangmanBetter {
                 currentScore = awardPointForCorrectLetter(true, currentScore);
             } else { // if no, tell the player and update the incorrect score
                 System.out.printf("%s is not in the word\n", guess);
-                currentIncorrectGuesses = updateIncorrectCount(randomWord.indexOf(guess) >= 0, currentIncorrectGuesses);
+                currentIncorrectGuesses = updateIncorrectCount(randomWord.indexOf(guess) < 0, currentIncorrectGuesses);
             }
             index++; // change to the next index to be ready for the next guess
         }
@@ -218,7 +218,7 @@ public class HangmanBetter {
 
     // +1 to the incorrect count when player incorrectly guesses
     public static int updateIncorrectCount(boolean correctGuess, int currentCount) {
-        if (correctGuess == false)
+        if (correctGuess)
             return ++currentCount;
         return currentCount;
     }
