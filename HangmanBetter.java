@@ -217,8 +217,8 @@ public class HangmanBetter {
     }
 
     // +1 to the incorrect count when player incorrectly guesses
-    public static int updateIncorrectCount(boolean correctGuess, int currentCount) {
-        if (correctGuess)
+    public static int updateIncorrectCount(boolean incorrectGuess, int currentCount) {
+        if (incorrectGuess)
             return ++currentCount;
         return currentCount;
     }
