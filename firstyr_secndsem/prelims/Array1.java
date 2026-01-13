@@ -17,7 +17,7 @@ public class Array1 {
                 System.out.println("Found " + choice + " at index " + i);
                 break;
             }
-            System.out.println(choice + " is not found in any index.");
+            System.out.println(-1);
         }
 
         input.close();
